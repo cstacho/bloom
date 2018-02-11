@@ -110,7 +110,7 @@ def alexa_volunteer(intent_request, session):
     should_end_session = False
     card_title = result["name"]
     
-    if not session['attributes']:
+    if not 'attributes' in session:
          return {
           "version": "1.0",
           "sessionAttributes": { "opp": result['name']},
@@ -128,7 +128,7 @@ def alexa_volunteer(intent_request, session):
         
     speech_output = "Great! You're all signed up."
     shouldEndSession = True
-    return build_response(session_attributes, build_speechlet_response(card_title, speech_output, reprompt_text, should_end_session))
+    return build_response(session['attributes'], build_speechlet_response(card_title, speech_output, "", shouldEndSession))
     
 def volunteer(intent_request):
     if intent_request['type'] == 'bot':
