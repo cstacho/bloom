@@ -1,0 +1,350 @@
+{
+  "metadata": {
+    "schemaVersion": "1.0",
+    "importType": "LEX",
+    "importFormat": "JSON"
+  },
+  "resource": {
+    "name": "Bloom",
+    "version": "3",
+    "intents": [
+      {
+        "name": "Volunteer",
+        "version": "11",
+        "fulfillmentActivity": {
+          "type": "CodeHook",
+          "codeHook": {
+            "uri": "arn:aws:lambda:us-east-1:470813729309:function:bloom",
+            "messageVersion": "1.0"
+          }
+        },
+        "sampleUtterances": [
+          "I would like to volunteer.",
+          "Volunteer",
+          "Volunteering opportunity",
+          "Help out",
+          "i would like to volunteer in {Location} on {DayOfWeek} at {Starttime} for {Time}"
+        ],
+        "slots": [
+          {
+            "name": "DayOfWeek",
+            "slotConstraint": "Required",
+            "slotType": "AMAZON.DayOfWeek",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Awesome! What day of the week?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 2,
+            "sampleUtterances": []
+          },
+          {
+            "name": "Location",
+            "slotConstraint": "Required",
+            "slotType": "AMAZON.US_STATE",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Hi! Which state would you like to volunteer in?"
+                }
+              ],
+              "maxAttempts": 2,
+              "responseCard": "{\"version\":1,\"contentType\":\"application/vnd.amazonaws.card.generic\"}"
+            },
+            "priority": 1,
+            "sampleUtterances": []
+          },
+          {
+            "name": "Starttime",
+            "slotConstraint": "Required",
+            "slotType": "AMAZON.TIME",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "What time would you like to start?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 3,
+            "sampleUtterances": []
+          },
+          {
+            "name": "Time",
+            "slotConstraint": "Required",
+            "slotType": "AMAZON.DURATION",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Great. How much time do you have?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 4,
+            "sampleUtterances": []
+          }
+        ]
+      },
+      {
+        "name": "Learn",
+        "version": "1",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [],
+        "slots": []
+      },
+      {
+        "name": "Donation",
+        "version": "4",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "I would like to donate",
+          "Donation",
+          "Charity",
+          "Give back"
+        ],
+        "slots": [
+          {
+            "name": "Amount",
+            "slotConstraint": "Required",
+            "slotType": "Dollar",
+            "slotTypeVersion": "2",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "How much money would you like to donate? "
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 3,
+            "sampleUtterances": []
+          },
+          {
+            "name": "Org",
+            "slotConstraint": "Required",
+            "slotType": "Opportunities",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "What organization can I help you donate to? "
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "sampleUtterances": []
+          },
+          {
+            "name": "Yesno",
+            "slotConstraint": "Required",
+            "slotType": "Yesno",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like this to be a monthly recurring payment?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 4,
+            "sampleUtterances": []
+          }
+        ]
+      },
+      {
+        "name": "Connect",
+        "version": "2",
+        "fulfillmentActivity": {
+          "type": "ReturnIntent"
+        },
+        "sampleUtterances": [
+          "I would like to find a mentor",
+          "I would like to mentor",
+          "i would like to tutor",
+          "i want to find a meet up",
+          "i want to network"
+        ],
+        "slots": [
+          {
+            "name": "Skill",
+            "slotConstraint": "Optional",
+            "slotType": "Skill",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "What skill would you like to share?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 4,
+            "sampleUtterances": []
+          },
+          {
+            "name": "State",
+            "slotConstraint": "Optional",
+            "slotType": "AMAZON.US_CITY",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "What state?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 1,
+            "sampleUtterances": []
+          },
+          {
+            "name": "Teachorlearn",
+            "slotConstraint": "Optional",
+            "slotType": "Teachorlearn",
+            "slotTypeVersion": "1",
+            "valueElicitationPrompt": {
+              "messages": [
+                {
+                  "contentType": "PlainText",
+                  "content": "Would you like to teach or learn?"
+                }
+              ],
+              "maxAttempts": 2
+            },
+            "priority": 5,
+            "sampleUtterances": []
+          }
+        ]
+      }
+    ],
+    "slotTypes": [
+      {
+        "description": "Skill type",
+        "name": "Skill",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "Skill",
+            "synonyms": []
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "description": "Dollar Amount",
+        "name": "Dollar",
+        "version": "2",
+        "enumerationValues": [
+          {
+            "value": "$5"
+          },
+          {
+            "value": "5 dollars"
+          },
+          {
+            "value": "$10"
+          },
+          {
+            "value": "one hundred dollars"
+          },
+          {
+            "value": "five dollars"
+          },
+          {
+            "value": "$1"
+          },
+          {
+            "value": "$50"
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "name": "Opportunities",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "Girls on the Run",
+            "synonyms": []
+          },
+          {
+            "value": "Girls Who Code",
+            "synonyms": []
+          },
+          {
+            "value": "Girls not Brides ",
+            "synonyms": []
+          },
+          {
+            "value": "She Should Run",
+            "synonyms": []
+          }
+        ],
+        "valueSelectionStrategy": "TOP_RESOLUTION"
+      },
+      {
+        "description": "Teach or learn",
+        "name": "Teachorlearn",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "Teachorlearn",
+            "synonyms": []
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      },
+      {
+        "description": "Answer yes or no",
+        "name": "Yesno",
+        "version": "1",
+        "enumerationValues": [
+          {
+            "value": "yes",
+            "synonyms": []
+          }
+        ],
+        "valueSelectionStrategy": "ORIGINAL_VALUE"
+      }
+    ],
+    "voiceId": "Salli",
+    "childDirected": false,
+    "locale": "en-US",
+    "idleSessionTTLInSeconds": 300,
+    "clarificationPrompt": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, can you please repeat that?"
+        }
+      ],
+      "maxAttempts": 5
+    },
+    "abortStatement": {
+      "messages": [
+        {
+          "contentType": "PlainText",
+          "content": "Sorry, I could not understand. Goodbye."
+        }
+      ]
+    }
+  }
+}
